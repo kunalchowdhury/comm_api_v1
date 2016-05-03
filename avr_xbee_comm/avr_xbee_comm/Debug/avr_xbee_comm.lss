@@ -1,0 +1,838 @@
+
+avr_xbee_comm.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000014  00800100  0000041c  000004b0  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         0000041c  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          00000087  00800114  00800114  000004c4  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000004c4  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000004f4  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 000000d8  00000000  00000000  00000530  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000d78  00000000  00000000  00000608  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 000004eb  00000000  00000000  00001380  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000415  00000000  00000000  0000186b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000204  00000000  00000000  00001c80  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    0000054d  00000000  00000000  00001e84  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    000006ae  00000000  00000000  000023d1  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 000000a8  00000000  00000000  00002a7f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 34 00 	jmp	0x68	; 0x68 <__ctors_end>
+   4:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+   8:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+   c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  10:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  14:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  18:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  1c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  20:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  24:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  28:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  2c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  30:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  34:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  38:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  3c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  40:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  44:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  48:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  4c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  50:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  54:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  58:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  5c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  60:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  64:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+
+00000068 <__ctors_end>:
+  68:	11 24       	eor	r1, r1
+  6a:	1f be       	out	0x3f, r1	; 63
+  6c:	cf ef       	ldi	r28, 0xFF	; 255
+  6e:	d8 e0       	ldi	r29, 0x08	; 8
+  70:	de bf       	out	0x3e, r29	; 62
+  72:	cd bf       	out	0x3d, r28	; 61
+
+00000074 <__do_copy_data>:
+  74:	11 e0       	ldi	r17, 0x01	; 1
+  76:	a0 e0       	ldi	r26, 0x00	; 0
+  78:	b1 e0       	ldi	r27, 0x01	; 1
+  7a:	ec e1       	ldi	r30, 0x1C	; 28
+  7c:	f4 e0       	ldi	r31, 0x04	; 4
+  7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
+  80:	05 90       	lpm	r0, Z+
+  82:	0d 92       	st	X+, r0
+  84:	a4 31       	cpi	r26, 0x14	; 20
+  86:	b1 07       	cpc	r27, r17
+  88:	d9 f7       	brne	.-10     	; 0x80 <__do_copy_data+0xc>
+
+0000008a <__do_clear_bss>:
+  8a:	21 e0       	ldi	r18, 0x01	; 1
+  8c:	a4 e1       	ldi	r26, 0x14	; 20
+  8e:	b1 e0       	ldi	r27, 0x01	; 1
+  90:	01 c0       	rjmp	.+2      	; 0x94 <.do_clear_bss_start>
+
+00000092 <.do_clear_bss_loop>:
+  92:	1d 92       	st	X+, r1
+
+00000094 <.do_clear_bss_start>:
+  94:	ab 39       	cpi	r26, 0x9B	; 155
+  96:	b2 07       	cpc	r27, r18
+  98:	e1 f7       	brne	.-8      	; 0x92 <.do_clear_bss_loop>
+  9a:	0e 94 53 00 	call	0xa6	; 0xa6 <main>
+  9e:	0c 94 0c 02 	jmp	0x418	; 0x418 <_exit>
+
+000000a2 <__bad_interrupt>:
+  a2:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+000000a6 <main>:
+#include "header/serial_sender_receiver.h"
+#include "header/util.h"
+#include "header/fsm.h"
+
+int main(void)
+{
+  a6:	cf 93       	push	r28
+  a8:	df 93       	push	r29
+  aa:	cd b7       	in	r28, 0x3d	; 61
+  ac:	de b7       	in	r29, 0x3e	; 62
+  ae:	2c 97       	sbiw	r28, 0x0c	; 12
+  b0:	0f b6       	in	r0, 0x3f	; 63
+  b2:	f8 94       	cli
+  b4:	de bf       	out	0x3e, r29	; 62
+  b6:	0f be       	out	0x3f, r0	; 63
+  b8:	cd bf       	out	0x3d, r28	; 61
+	uint16_t address[] = {0x2121, 0x4310, 0x5620, 0x8909};
+  ba:	88 e0       	ldi	r24, 0x08	; 8
+  bc:	eb e0       	ldi	r30, 0x0B	; 11
+  be:	f1 e0       	ldi	r31, 0x01	; 1
+  c0:	de 01       	movw	r26, r28
+  c2:	11 96       	adiw	r26, 0x01	; 1
+  c4:	01 90       	ld	r0, Z+
+  c6:	0d 92       	st	X+, r0
+  c8:	8a 95       	dec	r24
+  ca:	e1 f7       	brne	.-8      	; 0xc4 <main+0x1e>
+	uint8_t  cmds[]	   = {0x05, 0x06, 0x08, 0x09};
+  cc:	85 e0       	ldi	r24, 0x05	; 5
+  ce:	89 87       	std	Y+9, r24	; 0x09
+  d0:	86 e0       	ldi	r24, 0x06	; 6
+  d2:	8a 87       	std	Y+10, r24	; 0x0a
+  d4:	88 e0       	ldi	r24, 0x08	; 8
+  d6:	8b 87       	std	Y+11, r24	; 0x0b
+  d8:	89 e0       	ldi	r24, 0x09	; 9
+  da:	8c 87       	std	Y+12, r24	; 0x0c
+		
+	if(is_magic_number_present() == false)
+  dc:	0e 94 6d 01 	call	0x2da	; 0x2da <is_magic_number_present>
+  e0:	81 11       	cpse	r24, r1
+  e2:	0a c0       	rjmp	.+20     	; 0xf8 <main+0x52>
+	{
+		write_address_to_eeprom(4, address, cmds, true);
+  e4:	21 e0       	ldi	r18, 0x01	; 1
+  e6:	ae 01       	movw	r20, r28
+  e8:	47 5f       	subi	r20, 0xF7	; 247
+  ea:	5f 4f       	sbci	r21, 0xFF	; 255
+  ec:	be 01       	movw	r22, r28
+  ee:	6f 5f       	subi	r22, 0xFF	; 255
+  f0:	7f 4f       	sbci	r23, 0xFF	; 255
+  f2:	84 e0       	ldi	r24, 0x04	; 4
+  f4:	0e 94 7b 01 	call	0x2f6	; 0x2f6 <write_address_to_eeprom>
+	}
+	master_exec();
+  f8:	0e 94 5c 01 	call	0x2b8	; 0x2b8 <master_exec>
+		/* This serial message maybe (1) from gateway or (2) from slaves             */
+		/************************************************************************/
+		//uint8_t * message = rx_serial();
+		
+		
+    }
+  fc:	ff cf       	rjmp	.-2      	; 0xfc <main+0x56>
+
+000000fe <init_zb_tx_request>:
+struct zigbee_transmit_status _zb_tx_status;
+struct zigbee_transmit_status *_p_zb_tx_status = &_zb_tx_status;
+
+
+void init_zb_tx_request(){
+	_p_zb_tx_req->start_delimiter = 0x70;
+  fe:	e0 91 09 01 	lds	r30, 0x0109
+ 102:	f0 91 0a 01 	lds	r31, 0x010A
+ 106:	80 e7       	ldi	r24, 0x70	; 112
+ 108:	81 ab       	std	Z+49, r24	; 0x31
+	_p_zb_tx_req->msb = 0x00;
+ 10a:	12 aa       	std	Z+50, r1	; 0x32
+	_p_zb_tx_req->lsb = 0x16;
+ 10c:	86 e1       	ldi	r24, 0x16	; 22
+ 10e:	83 ab       	std	Z+51, r24	; 0x33
+	_p_zb_tx_req->frame_type= 0x10;
+ 110:	80 e1       	ldi	r24, 0x10	; 16
+ 112:	84 ab       	std	Z+52, r24	; 0x34
+	_p_zb_tx_req->broadcast_radius = 0x00;
+ 114:	16 aa       	std	Z+54, r1	; 0x36
+ 116:	08 95       	ret
+
+00000118 <serial_payload>:
+}
+
+uint8_t * serial_payload(struct zigbee_transmit_request * ptr)
+{
+ 118:	cf 93       	push	r28
+ 11a:	df 93       	push	r29
+ 11c:	dc 01       	movw	r26, r24
+	ptr->tx_data.tx_data[0x00] = ptr->start_delimiter ;
+ 11e:	d1 96       	adiw	r26, 0x31	; 49
+ 120:	8c 91       	ld	r24, X
+ 122:	d1 97       	sbiw	r26, 0x31	; 49
+ 124:	50 96       	adiw	r26, 0x10	; 16
+ 126:	8c 93       	st	X, r24
+ 128:	50 97       	sbiw	r26, 0x10	; 16
+	ptr->tx_data.tx_data[0x01] = ptr->msb ;
+ 12a:	d2 96       	adiw	r26, 0x32	; 50
+ 12c:	8c 91       	ld	r24, X
+ 12e:	d2 97       	sbiw	r26, 0x32	; 50
+ 130:	51 96       	adiw	r26, 0x11	; 17
+ 132:	8c 93       	st	X, r24
+ 134:	51 97       	sbiw	r26, 0x11	; 17
+	ptr->tx_data.tx_data[0x02] = ptr->lsb ;
+ 136:	d3 96       	adiw	r26, 0x33	; 51
+ 138:	8c 91       	ld	r24, X
+ 13a:	d3 97       	sbiw	r26, 0x33	; 51
+ 13c:	52 96       	adiw	r26, 0x12	; 18
+ 13e:	8c 93       	st	X, r24
+ 140:	52 97       	sbiw	r26, 0x12	; 18
+	ptr->tx_data.tx_data[0x03] = ptr->frame_type ;
+ 142:	d4 96       	adiw	r26, 0x34	; 52
+ 144:	8c 91       	ld	r24, X
+ 146:	d4 97       	sbiw	r26, 0x34	; 52
+ 148:	53 96       	adiw	r26, 0x13	; 19
+ 14a:	8c 93       	st	X, r24
+ 14c:	53 97       	sbiw	r26, 0x13	; 19
+	ptr->tx_data.tx_data[0x04] = ptr->frame_id ;
+ 14e:	d5 96       	adiw	r26, 0x35	; 53
+ 150:	8c 91       	ld	r24, X
+ 152:	d5 97       	sbiw	r26, 0x35	; 53
+ 154:	54 96       	adiw	r26, 0x14	; 20
+ 156:	8c 93       	st	X, r24
+ 158:	54 97       	sbiw	r26, 0x14	; 20
+ 15a:	ed 01       	movw	r28, r26
+ 15c:	28 96       	adiw	r28, 0x08	; 8
+ 15e:	fd 01       	movw	r30, r26
+ 160:	75 96       	adiw	r30, 0x15	; 21
+ 162:	9d 01       	movw	r18, r26
+ 164:	23 5e       	subi	r18, 0xE3	; 227
+ 166:	3f 4f       	sbci	r19, 0xFF	; 255
+	for (uint8_t c = 0x05 ; c < 0x0D ; c++)
+	{
+		ptr->tx_data.tx_data[c] = ptr->address_64.address[0x07-(c-0x05)];
+ 168:	8a 91       	ld	r24, -Y
+ 16a:	81 93       	st	Z+, r24
+	ptr->tx_data.tx_data[0x00] = ptr->start_delimiter ;
+	ptr->tx_data.tx_data[0x01] = ptr->msb ;
+	ptr->tx_data.tx_data[0x02] = ptr->lsb ;
+	ptr->tx_data.tx_data[0x03] = ptr->frame_type ;
+	ptr->tx_data.tx_data[0x04] = ptr->frame_id ;
+	for (uint8_t c = 0x05 ; c < 0x0D ; c++)
+ 16c:	e2 17       	cp	r30, r18
+ 16e:	f3 07       	cpc	r31, r19
+ 170:	d9 f7       	brne	.-10     	; 0x168 <serial_payload+0x50>
+	{
+		ptr->tx_data.tx_data[c] = ptr->address_64.address[0x07-(c-0x05)];
+	}
+	for (uint8_t c = 0x0D ; c < 0x0F ; c++)
+	{
+		ptr->tx_data.tx_data[c] = ptr->address_16.address[0x01-(c-0x0D)];
+ 172:	d0 96       	adiw	r26, 0x30	; 48
+ 174:	8c 91       	ld	r24, X
+ 176:	d0 97       	sbiw	r26, 0x30	; 48
+ 178:	5d 96       	adiw	r26, 0x1d	; 29
+ 17a:	8c 93       	st	X, r24
+ 17c:	5d 97       	sbiw	r26, 0x1d	; 29
+ 17e:	9f 96       	adiw	r26, 0x2f	; 47
+ 180:	8c 91       	ld	r24, X
+ 182:	9f 97       	sbiw	r26, 0x2f	; 47
+ 184:	5e 96       	adiw	r26, 0x1e	; 30
+ 186:	8c 93       	st	X, r24
+ 188:	5e 97       	sbiw	r26, 0x1e	; 30
+	}
+	ptr->tx_data.tx_data[0x0F] = 0x00;
+ 18a:	5f 96       	adiw	r26, 0x1f	; 31
+ 18c:	1c 92       	st	X, r1
+ 18e:	5f 97       	sbiw	r26, 0x1f	; 31
+	ptr->tx_data.tx_data[0x10] = 0x00;
+ 190:	90 96       	adiw	r26, 0x20	; 32
+ 192:	1c 92       	st	X, r1
+ 194:	90 97       	sbiw	r26, 0x20	; 32
+ 196:	ed 01       	movw	r28, r26
+ 198:	60 96       	adiw	r28, 0x10	; 16
+ 19a:	fd 01       	movw	r30, r26
+ 19c:	b1 96       	adiw	r30, 0x21	; 33
+ 19e:	9d 01       	movw	r18, r26
+ 1a0:	27 5d       	subi	r18, 0xD7	; 215
+ 1a2:	3f 4f       	sbci	r19, 0xFF	; 255
+	for (uint8_t c = 0x11 ; c < 0x19 ; c++)
+	{
+		ptr->tx_data.tx_data[c] = ptr->data.data[0x07-(c-0x11)];
+ 1a4:	8a 91       	ld	r24, -Y
+ 1a6:	81 93       	st	Z+, r24
+	{
+		ptr->tx_data.tx_data[c] = ptr->address_16.address[0x01-(c-0x0D)];
+	}
+	ptr->tx_data.tx_data[0x0F] = 0x00;
+	ptr->tx_data.tx_data[0x10] = 0x00;
+	for (uint8_t c = 0x11 ; c < 0x19 ; c++)
+ 1a8:	e2 17       	cp	r30, r18
+ 1aa:	f3 07       	cpc	r31, r19
+ 1ac:	d9 f7       	brne	.-10     	; 0x1a4 <serial_payload+0x8c>
+	{
+		ptr->tx_data.tx_data[c] = ptr->data.data[0x07-(c-0x11)];
+	}
+	ptr->tx_data.tx_data[0x19] = ptr->checksum;
+ 1ae:	d8 96       	adiw	r26, 0x38	; 56
+ 1b0:	8c 91       	ld	r24, X
+ 1b2:	d8 97       	sbiw	r26, 0x38	; 56
+ 1b4:	99 96       	adiw	r26, 0x29	; 41
+ 1b6:	8c 93       	st	X, r24
+ 1b8:	99 97       	sbiw	r26, 0x29	; 41
+	
+	return ptr->tx_data.tx_data ;
+}
+ 1ba:	cd 01       	movw	r24, r26
+ 1bc:	40 96       	adiw	r24, 0x10	; 16
+ 1be:	df 91       	pop	r29
+ 1c0:	cf 91       	pop	r28
+ 1c2:	08 95       	ret
+
+000001c4 <send_slave_msg>:
+/************************************************************************/
+/* Broadcast API											            */
+/************************************************************************/
+
+void send_slave_msg(uint8_t c, uint8_t cmd_type)
+{
+ 1c4:	cf 93       	push	r28
+ 1c6:	df 93       	push	r29
+ 1c8:	c8 2f       	mov	r28, r24
+ 1ca:	d6 2f       	mov	r29, r22
+	init_zb_tx_request();
+ 1cc:	0e 94 7f 00 	call	0xfe	; 0xfe <init_zb_tx_request>
+	_p_zb_tx_req->frame_id = 0x01;
+ 1d0:	e0 91 09 01 	lds	r30, 0x0109
+ 1d4:	f0 91 0a 01 	lds	r31, 0x010A
+ 1d8:	81 e0       	ldi	r24, 0x01	; 1
+ 1da:	85 ab       	std	Z+53, r24	; 0x35
+	_p_zb_tx_req->address_64.address[1] = 0xFF;
+ 1dc:	8f ef       	ldi	r24, 0xFF	; 255
+ 1de:	81 83       	std	Z+1, r24	; 0x01
+	_p_zb_tx_req->address_64.address[0] = 0xFF;
+ 1e0:	e0 91 09 01 	lds	r30, 0x0109
+ 1e4:	f0 91 0a 01 	lds	r31, 0x010A
+ 1e8:	80 83       	st	Z, r24
+	_p_zb_tx_req->address_16.address[1] = eeprom_read_buffer[c];
+ 1ea:	e0 91 09 01 	lds	r30, 0x0109
+ 1ee:	f0 91 0a 01 	lds	r31, 0x010A
+ 1f2:	ac 2f       	mov	r26, r28
+ 1f4:	b0 e0       	ldi	r27, 0x00	; 0
+ 1f6:	a4 5e       	subi	r26, 0xE4	; 228
+ 1f8:	be 4f       	sbci	r27, 0xFE	; 254
+ 1fa:	8c 91       	ld	r24, X
+ 1fc:	80 ab       	std	Z+48, r24	; 0x30
+	_p_zb_tx_req->address_16.address[0] = eeprom_read_buffer[c+1];
+ 1fe:	11 96       	adiw	r26, 0x01	; 1
+ 200:	8c 91       	ld	r24, X
+ 202:	87 a7       	std	Z+47, r24	; 0x2f
+	_p_zb_tx_req->options = 0x00;
+ 204:	17 aa       	std	Z+55, r1	; 0x37
+	_p_zb_tx_req->data.data[0] = cmd_type ;
+ 206:	d0 87       	std	Z+8, r29	; 0x08
+	 uint8_t _msg_checksum = (0x70 + 0x16+ 0x10 + 0x01 +  0xFF + 0xFF + 0xFF + 0xFE + 0x09) & 0xFF;
+	_p_zb_tx_req->checksum = 0xFF - _msg_checksum ;
+ 208:	84 e6       	ldi	r24, 0x64	; 100
+ 20a:	80 af       	std	Z+56, r24	; 0x38
+	 tx_serial(serial_payload(_p_zb_tx_req));
+ 20c:	cf 01       	movw	r24, r30
+ 20e:	0e 94 8c 00 	call	0x118	; 0x118 <serial_payload>
+ 212:	0e 94 da 01 	call	0x3b4	; 0x3b4 <tx_serial>
+}
+ 216:	df 91       	pop	r29
+ 218:	cf 91       	pop	r28
+ 21a:	08 95       	ret
+
+0000021c <eeprom_write>:
+	
+}
+
+void eeprom_write(uint16_t address, uint8_t value)
+{
+	while(EECR & (1 << EEPE));
+ 21c:	f9 99       	sbic	0x1f, 1	; 31
+ 21e:	fe cf       	rjmp	.-4      	; 0x21c <eeprom_write>
+	EEAR = address;
+ 220:	92 bd       	out	0x22, r25	; 34
+ 222:	81 bd       	out	0x21, r24	; 33
+	EEDR = value ;
+ 224:	60 bd       	out	0x20, r22	; 32
+	EECR |= (1 << EEMPE);
+ 226:	fa 9a       	sbi	0x1f, 2	; 31
+	EECR |= (1 << EEPE);
+ 228:	f9 9a       	sbi	0x1f, 1	; 31
+ 22a:	08 95       	ret
+
+0000022c <init_eeprom_read>:
+	return;
+}
+
+void init_eeprom_read(uint16_t address)
+{
+	while(EECR & (1 << EEPE));
+ 22c:	f9 99       	sbic	0x1f, 1	; 31
+ 22e:	fe cf       	rjmp	.-4      	; 0x22c <init_eeprom_read>
+	EEAR  = address ;
+ 230:	92 bd       	out	0x22, r25	; 34
+ 232:	81 bd       	out	0x21, r24	; 33
+	EECR |= 1 << EERE;
+ 234:	f8 9a       	sbi	0x1f, 0	; 31
+ 236:	08 95       	ret
+
+00000238 <read_slave_addresses>:
+	_p_zb_tx_req->checksum = 0xFF - _msg_checksum ;
+	 tx_serial(serial_payload(_p_zb_tx_req));
+}
+
+bool read_slave_addresses()
+{
+ 238:	cf 92       	push	r12
+ 23a:	df 92       	push	r13
+ 23c:	ef 92       	push	r14
+ 23e:	ff 92       	push	r15
+ 240:	0f 93       	push	r16
+ 242:	1f 93       	push	r17
+ 244:	cf 93       	push	r28
+ 246:	df 93       	push	r29
+	uint8_t sum = 0;
+	uint8_t value= 0;
+	init_eeprom_read(ROM_START_ADD_DEV_ID_W);
+ 248:	80 e0       	ldi	r24, 0x00	; 0
+ 24a:	90 e0       	ldi	r25, 0x00	; 0
+ 24c:	0e 94 16 01 	call	0x22c	; 0x22c <init_eeprom_read>
+	value = EEDR;
+ 250:	80 b5       	in	r24, 0x20	; 32
+	if(value != ROM_MAGIC_NUMBER)
+ 252:	84 34       	cpi	r24, 0x44	; 68
+ 254:	39 f5       	brne	.+78     	; 0x2a4 <read_slave_addresses+0x6c>
+	{
+		return false;
+	}
+	sum += ROM_MAGIC_NUMBER ;
+	init_eeprom_read(ROM_START_ADD_DEV_ID_W+1);
+ 256:	81 e0       	ldi	r24, 0x01	; 1
+ 258:	90 e0       	ldi	r25, 0x00	; 0
+ 25a:	0e 94 16 01 	call	0x22c	; 0x22c <init_eeprom_read>
+	value = EEDR;
+ 25e:	00 b5       	in	r16, 0x20	; 32
+	eeprom_read_buffer[0] = value;
+ 260:	00 93 1c 01 	sts	0x011C, r16
+	sum += value;
+ 264:	14 e4       	ldi	r17, 0x44	; 68
+ 266:	10 0f       	add	r17, r16
+	for (int i = 1 ;  i <= value+1; i++)
+ 268:	e0 2e       	mov	r14, r16
+ 26a:	f1 2c       	mov	r15, r1
+ 26c:	c7 01       	movw	r24, r14
+ 26e:	01 96       	adiw	r24, 0x01	; 1
+ 270:	6c 01       	movw	r12, r24
+ 272:	c1 e0       	ldi	r28, 0x01	; 1
+ 274:	d0 e0       	ldi	r29, 0x00	; 0
+	{
+		init_eeprom_read(ROM_START_ADD_DEV_ID_W+1+i);
+ 276:	21 96       	adiw	r28, 0x01	; 1
+ 278:	ce 01       	movw	r24, r28
+ 27a:	0e 94 16 01 	call	0x22c	; 0x22c <init_eeprom_read>
+ 27e:	ce 01       	movw	r24, r28
+ 280:	01 97       	sbiw	r24, 0x01	; 1
+		if(i <= value){
+ 282:	e8 16       	cp	r14, r24
+ 284:	f9 06       	cpc	r15, r25
+ 286:	2c f0       	brlt	.+10     	; 0x292 <read_slave_addresses+0x5a>
+			eeprom_read_buffer[i] = EEDR;
+ 288:	80 b5       	in	r24, 0x20	; 32
+ 28a:	fe 01       	movw	r30, r28
+ 28c:	e5 5e       	subi	r30, 0xE5	; 229
+ 28e:	fe 4f       	sbci	r31, 0xFE	; 254
+ 290:	80 83       	st	Z, r24
+		}
+		sum += value ;
+ 292:	10 0f       	add	r17, r16
+	sum += ROM_MAGIC_NUMBER ;
+	init_eeprom_read(ROM_START_ADD_DEV_ID_W+1);
+	value = EEDR;
+	eeprom_read_buffer[0] = value;
+	sum += value;
+	for (int i = 1 ;  i <= value+1; i++)
+ 294:	cc 16       	cp	r12, r28
+ 296:	dd 06       	cpc	r13, r29
+ 298:	74 f7       	brge	.-36     	; 0x276 <read_slave_addresses+0x3e>
+		if(i <= value){
+			eeprom_read_buffer[i] = EEDR;
+		}
+		sum += value ;
+	}
+	if(sum == 0)
+ 29a:	81 e0       	ldi	r24, 0x01	; 1
+ 29c:	11 23       	and	r17, r17
+ 29e:	19 f0       	breq	.+6      	; 0x2a6 <read_slave_addresses+0x6e>
+ 2a0:	80 e0       	ldi	r24, 0x00	; 0
+ 2a2:	01 c0       	rjmp	.+2      	; 0x2a6 <read_slave_addresses+0x6e>
+	uint8_t value= 0;
+	init_eeprom_read(ROM_START_ADD_DEV_ID_W);
+	value = EEDR;
+	if(value != ROM_MAGIC_NUMBER)
+	{
+		return false;
+ 2a4:	80 e0       	ldi	r24, 0x00	; 0
+	{
+		return true;
+	}
+	return false;
+	
+}
+ 2a6:	df 91       	pop	r29
+ 2a8:	cf 91       	pop	r28
+ 2aa:	1f 91       	pop	r17
+ 2ac:	0f 91       	pop	r16
+ 2ae:	ff 90       	pop	r15
+ 2b0:	ef 90       	pop	r14
+ 2b2:	df 90       	pop	r13
+ 2b4:	cf 90       	pop	r12
+ 2b6:	08 95       	ret
+
+000002b8 <master_exec>:
+	}
+	return true;
+}
+void master_exec()
+{
+	if(read_slave_addresses() == true)
+ 2b8:	0e 94 1c 01 	call	0x238	; 0x238 <read_slave_addresses>
+ 2bc:	81 30       	cpi	r24, 0x01	; 1
+ 2be:	61 f4       	brne	.+24     	; 0x2d8 <master_exec+0x20>
+	{
+		for(uint8_t c = 1; c < eeprom_read_buffer[1] ; c +=2)
+ 2c0:	80 91 1d 01 	lds	r24, 0x011D
+ 2c4:	82 30       	cpi	r24, 0x02	; 2
+ 2c6:	40 f0       	brcs	.+16     	; 0x2d8 <master_exec+0x20>
+		{
+			/************************************************************************/
+			/* SEND INITIAL REQUEST TO SLAVE										*/
+			/************************************************************************/
+            send_slave_msg(c, _command_types.send_slave_hb);
+ 2c8:	60 91 08 01 	lds	r22, 0x0108
+ 2cc:	81 e0       	ldi	r24, 0x01	; 1
+ 2ce:	0e 94 e2 00 	call	0x1c4	; 0x1c4 <send_slave_msg>
+			/************************************************************************/
+			/* KEEP RETRYING TILL MAX_RETRIES_FIRST_HEARTBEAT                       */
+			/************************************************************************/
+			while(counter++ < NUM_RETRIES_FIRST_HEARTBEAT)
+			{
+				uint8_t* reply = rx_serial();
+ 2d2:	0e 94 f1 01 	call	0x3e2	; 0x3e2 <rx_serial>
+ 2d6:	ff cf       	rjmp	.-2      	; 0x2d6 <master_exec+0x1e>
+ 2d8:	08 95       	ret
+
+000002da <is_magic_number_present>:
+	}
+}
+
+bool is_magic_number_present()
+{
+	init_eeprom_read(ROM_START_ADD_DEV_ID_W);
+ 2da:	80 e0       	ldi	r24, 0x00	; 0
+ 2dc:	90 e0       	ldi	r25, 0x00	; 0
+ 2de:	0e 94 16 01 	call	0x22c	; 0x22c <init_eeprom_read>
+	eeprom_start_byte = EEDR ;
+ 2e2:	80 b5       	in	r24, 0x20	; 32
+ 2e4:	80 93 1b 01 	sts	0x011B, r24
+	if(eeprom_start_byte == ROM_MAGIC_NUMBER)
+ 2e8:	90 91 1b 01 	lds	r25, 0x011B
+ 2ec:	81 e0       	ldi	r24, 0x01	; 1
+ 2ee:	94 34       	cpi	r25, 0x44	; 68
+ 2f0:	09 f0       	breq	.+2      	; 0x2f4 <is_magic_number_present+0x1a>
+ 2f2:	80 e0       	ldi	r24, 0x00	; 0
+	{
+		return true ;
+	}
+	return false; 
+	
+}
+ 2f4:	08 95       	ret
+
+000002f6 <write_address_to_eeprom>:
+	EEAR  = address ;
+	EECR |= 1 << EERE;
+}
+
+void write_address_to_eeprom(uint8_t size, uint16_t *xbee_addr, uint8_t* cmd, bool first)
+{
+ 2f6:	bf 92       	push	r11
+ 2f8:	cf 92       	push	r12
+ 2fa:	df 92       	push	r13
+ 2fc:	ef 92       	push	r14
+ 2fe:	ff 92       	push	r15
+ 300:	0f 93       	push	r16
+ 302:	1f 93       	push	r17
+ 304:	cf 93       	push	r28
+ 306:	df 93       	push	r29
+ 308:	d8 2f       	mov	r29, r24
+ 30a:	8b 01       	movw	r16, r22
+	uint8_t sum = 0;
+	uint8_t chk_sum_byte = 0;
+	eeprom_write(ROM_START_ADD_DEV_ID_W, ROM_MAGIC_NUMBER);
+ 30c:	64 e4       	ldi	r22, 0x44	; 68
+ 30e:	80 e0       	ldi	r24, 0x00	; 0
+ 310:	90 e0       	ldi	r25, 0x00	; 0
+ 312:	0e 94 0e 01 	call	0x21c	; 0x21c <eeprom_write>
+	eeprom_write(ROM_START_ADD_DEV_ID_W + 1, size);
+ 316:	6d 2f       	mov	r22, r29
+ 318:	81 e0       	ldi	r24, 0x01	; 1
+ 31a:	90 e0       	ldi	r25, 0x00	; 0
+ 31c:	0e 94 0e 01 	call	0x21c	; 0x21c <eeprom_write>
+	uint8_t c = 1;
+	sum = ROM_MAGIC_NUMBER + size ;
+ 320:	0f 2e       	mov	r0, r31
+ 322:	f4 e4       	ldi	r31, 0x44	; 68
+ 324:	bf 2e       	mov	r11, r31
+ 326:	f0 2d       	mov	r31, r0
+ 328:	bd 0e       	add	r11, r29
+	while(--size)
+ 32a:	d1 50       	subi	r29, 0x01	; 1
+ 32c:	c9 f0       	breq	.+50     	; 0x360 <write_address_to_eeprom+0x6a>
+ 32e:	ff 24       	eor	r15, r15
+ 330:	f3 94       	inc	r15
+	{
+		uint16_t address = *xbee_addr;
+ 332:	f8 01       	movw	r30, r16
+ 334:	c0 81       	ld	r28, Z
+ 336:	e1 80       	ldd	r14, Z+1	; 0x01
+		uint8_t high = (uint8_t)(address >> 8);
+		uint8_t low = (uint8_t)(address);
+		eeprom_write(ROM_START_ADD_DEV_ID_W+1+c, high);
+ 338:	cf 2c       	mov	r12, r15
+ 33a:	d1 2c       	mov	r13, r1
+ 33c:	6e 2d       	mov	r22, r14
+ 33e:	c6 01       	movw	r24, r12
+ 340:	01 96       	adiw	r24, 0x01	; 1
+ 342:	0e 94 0e 01 	call	0x21c	; 0x21c <eeprom_write>
+		eeprom_write(ROM_START_ADD_DEV_ID_W+1+c+1, low);
+ 346:	6c 2f       	mov	r22, r28
+ 348:	c6 01       	movw	r24, r12
+ 34a:	02 96       	adiw	r24, 0x02	; 2
+ 34c:	0e 94 0e 01 	call	0x21c	; 0x21c <eeprom_write>
+		sum += high + low ;
+ 350:	ce 0d       	add	r28, r14
+ 352:	bc 0e       	add	r11, r28
+		++xbee_addr;
+ 354:	0e 5f       	subi	r16, 0xFE	; 254
+ 356:	1f 4f       	sbci	r17, 0xFF	; 255
+		++cmd;
+		c += 2;
+ 358:	f3 94       	inc	r15
+ 35a:	f3 94       	inc	r15
+	uint8_t chk_sum_byte = 0;
+	eeprom_write(ROM_START_ADD_DEV_ID_W, ROM_MAGIC_NUMBER);
+	eeprom_write(ROM_START_ADD_DEV_ID_W + 1, size);
+	uint8_t c = 1;
+	sum = ROM_MAGIC_NUMBER + size ;
+	while(--size)
+ 35c:	d1 50       	subi	r29, 0x01	; 1
+ 35e:	49 f7       	brne	.-46     	; 0x332 <write_address_to_eeprom+0x3c>
+		++xbee_addr;
+		++cmd;
+		c += 2;
+		
+	}
+	chk_sum_byte = ~sum + 1;
+ 360:	6b 2d       	mov	r22, r11
+ 362:	61 95       	neg	r22
+	eeprom_write(ROM_START_ADD_DEV_ID_W+2*size+2, chk_sum_byte);
+ 364:	82 e0       	ldi	r24, 0x02	; 2
+ 366:	90 e0       	ldi	r25, 0x00	; 0
+ 368:	0e 94 0e 01 	call	0x21c	; 0x21c <eeprom_write>
+}
+ 36c:	df 91       	pop	r29
+ 36e:	cf 91       	pop	r28
+ 370:	1f 91       	pop	r17
+ 372:	0f 91       	pop	r16
+ 374:	ff 90       	pop	r15
+ 376:	ef 90       	pop	r14
+ 378:	df 90       	pop	r13
+ 37a:	cf 90       	pop	r12
+ 37c:	bf 90       	pop	r11
+ 37e:	08 95       	ret
+
+00000380 <uart_init>:
+
+volatile uint8_t buffer[UART_SENDER_BUFFER_SZ];
+
+// baud rate = 9600, 8 bit data, 1 stop bit
+void uart_init(bool send){
+	if(send == true)
+ 380:	81 30       	cpi	r24, 0x01	; 1
+ 382:	21 f4       	brne	.+8      	; 0x38c <uart_init+0xc>
+	{
+		UCSR0B = (1 << TXEN0);
+ 384:	88 e0       	ldi	r24, 0x08	; 8
+ 386:	80 93 c1 00 	sts	0x00C1, r24
+ 38a:	03 c0       	rjmp	.+6      	; 0x392 <uart_init+0x12>
+	}else
+	{
+		UCSR0B = (1 << RXEN0);
+ 38c:	80 e1       	ldi	r24, 0x10	; 16
+ 38e:	80 93 c1 00 	sts	0x00C1, r24
+	}
+	
+	UCSR0C = (1 << UCSZ01) | (1 << UCSZ00);
+ 392:	86 e0       	ldi	r24, 0x06	; 6
+ 394:	80 93 c2 00 	sts	0x00C2, r24
+	UBRR0H = (uint8_t)(UBRR_VALUE >> 8) ;
+ 398:	10 92 c5 00 	sts	0x00C5, r1
+	UBRR0L = (uint8_t) UBRR_VALUE; 
+ 39c:	81 e8       	ldi	r24, 0x81	; 129
+ 39e:	80 93 c4 00 	sts	0x00C4, r24
+ 3a2:	08 95       	ret
+
+000003a4 <send>:
+}
+
+void send(uint8_t ch)
+{
+	while(! (UCSR0A & (1 << UDRE0))) ;
+ 3a4:	e0 ec       	ldi	r30, 0xC0	; 192
+ 3a6:	f0 e0       	ldi	r31, 0x00	; 0
+ 3a8:	90 81       	ld	r25, Z
+ 3aa:	95 ff       	sbrs	r25, 5
+ 3ac:	fd cf       	rjmp	.-6      	; 0x3a8 <send+0x4>
+	UDR0 = ch;
+ 3ae:	80 93 c6 00 	sts	0x00C6, r24
+ 3b2:	08 95       	ret
+
+000003b4 <tx_serial>:
+}
+
+void tx_serial(const uint8_t * ptr){
+ 3b4:	0f 93       	push	r16
+ 3b6:	1f 93       	push	r17
+ 3b8:	cf 93       	push	r28
+ 3ba:	df 93       	push	r29
+ 3bc:	8c 01       	movw	r16, r24
+	uart_init(true);
+ 3be:	81 e0       	ldi	r24, 0x01	; 1
+ 3c0:	0e 94 c0 01 	call	0x380	; 0x380 <uart_init>
+ 3c4:	e8 01       	movw	r28, r16
+ 3c6:	6f 96       	adiw	r28, 0x1f	; 31
+ 3c8:	0f 5f       	subi	r16, 0xFF	; 255
+ 3ca:	1f 4f       	sbci	r17, 0xFF	; 255
+	uint8_t sz = UART_SENDER_BUFFER_SZ -1;
+	ptr = ptr +sz ;
+	while(sz--)
+	{
+		send(*ptr);
+ 3cc:	8a 91       	ld	r24, -Y
+ 3ce:	0e 94 d2 01 	call	0x3a4	; 0x3a4 <send>
+
+void tx_serial(const uint8_t * ptr){
+	uart_init(true);
+	uint8_t sz = UART_SENDER_BUFFER_SZ -1;
+	ptr = ptr +sz ;
+	while(sz--)
+ 3d2:	c0 17       	cp	r28, r16
+ 3d4:	d1 07       	cpc	r29, r17
+ 3d6:	d1 f7       	brne	.-12     	; 0x3cc <tx_serial+0x18>
+	{
+		send(*ptr);
+		ptr--;
+	}
+}
+ 3d8:	df 91       	pop	r29
+ 3da:	cf 91       	pop	r28
+ 3dc:	1f 91       	pop	r17
+ 3de:	0f 91       	pop	r16
+ 3e0:	08 95       	ret
+
+000003e2 <rx_serial>:
+	uart_init(true);
+	send(c);
+}
+
+uint8_t *rx_serial()
+{
+ 3e2:	cf 93       	push	r28
+ 3e4:	df 93       	push	r29
+	uart_init(false);
+ 3e6:	80 e0       	ldi	r24, 0x00	; 0
+ 3e8:	0e 94 c0 01 	call	0x380	; 0x380 <uart_init>
+ 3ec:	2e e1       	ldi	r18, 0x1E	; 30
+ 3ee:	30 e0       	ldi	r19, 0x00	; 0
+	uint8_t sz = UART_SENDER_BUFFER_SZ -1;
+	while(sz)
+	{
+		while(!(UCSR0A & (1 << RXC0)));
+ 3f0:	e0 ec       	ldi	r30, 0xC0	; 192
+ 3f2:	f0 e0       	ldi	r31, 0x00	; 0
+		buffer[sz] = UDR0;
+ 3f4:	c6 ec       	ldi	r28, 0xC6	; 198
+ 3f6:	d0 e0       	ldi	r29, 0x00	; 0
+{
+	uart_init(false);
+	uint8_t sz = UART_SENDER_BUFFER_SZ -1;
+	while(sz)
+	{
+		while(!(UCSR0A & (1 << RXC0)));
+ 3f8:	80 81       	ld	r24, Z
+ 3fa:	88 23       	and	r24, r24
+ 3fc:	ec f7       	brge	.-6      	; 0x3f8 <rx_serial+0x16>
+		buffer[sz] = UDR0;
+ 3fe:	88 81       	ld	r24, Y
+ 400:	d9 01       	movw	r26, r18
+ 402:	a4 58       	subi	r26, 0x84	; 132
+ 404:	be 4f       	sbci	r27, 0xFE	; 254
+ 406:	8c 93       	st	X, r24
+ 408:	21 50       	subi	r18, 0x01	; 1
+ 40a:	31 09       	sbc	r19, r1
+
+uint8_t *rx_serial()
+{
+	uart_init(false);
+	uint8_t sz = UART_SENDER_BUFFER_SZ -1;
+	while(sz)
+ 40c:	a9 f7       	brne	.-22     	; 0x3f8 <rx_serial+0x16>
+		while(!(UCSR0A & (1 << RXC0)));
+		buffer[sz] = UDR0;
+		sz--;
+	}
+	return (uint8_t *)buffer;
+}
+ 40e:	8c e7       	ldi	r24, 0x7C	; 124
+ 410:	91 e0       	ldi	r25, 0x01	; 1
+ 412:	df 91       	pop	r29
+ 414:	cf 91       	pop	r28
+ 416:	08 95       	ret
+
+00000418 <_exit>:
+ 418:	f8 94       	cli
+
+0000041a <__stop_program>:
+ 41a:	ff cf       	rjmp	.-2      	; 0x41a <__stop_program>
