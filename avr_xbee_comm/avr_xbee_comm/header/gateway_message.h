@@ -14,7 +14,8 @@
 struct gateway_message
 {
 	uint8_t command ;
-	
+	uint16_t device_id;
+	uint8_t session_id;
 	
 };
 
