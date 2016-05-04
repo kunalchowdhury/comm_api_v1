@@ -22,7 +22,6 @@
 #define MAX_SLAVE_DEVICES 0x0A 
 #define NUM_RETRIES_FIRST_HEARTBEAT 0x1000  
 #define ZIGBEE_TRANSMIT_STATUS_RESPONSE_SIZE 0x0A
-#define GATEWAY_MSG_IDENTIFIER 0xCA
 
 
 typedef enum { false, true } bool;

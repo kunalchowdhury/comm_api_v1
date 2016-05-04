@@ -10,6 +10,7 @@
 #include "header/util.h"
 #include "header/fsm.h"
 
+
 int main(void)
 {
 	uint16_t address[] = {0x2121, 0x4310, 0x5620, 0x8909};

@@ -49,9 +49,10 @@ void exec_pwm();
 void exec_stepper_motor();
 
 /************************************************************************/
-/* API to run an appliance at a given port								*/
+/* API to run an appliance at given port(s), the user INPUT should wrap 
+the PORT statuses i.e. which ones to enabled disable						*/
 /************************************************************************/
-void exec_appliance();
+bool exec_appliance(bool on, uint8_t *port_status);
 
 /************************************************************************/
 /* API to send a reply indicating whether the execution was successful  */

@@ -13,11 +13,8 @@
 
 struct gateway_message
 {
-	uint8_t gateway_msg_identifier ;
-	uint8_t device_id_high;
-	uint8_t device_id_low;
 	uint8_t command ;
-	uint8_t session_id;
+	
 	
 };
 
