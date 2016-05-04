@@ -59,7 +59,7 @@ int main(void)
      while(1)
      {
      	uint8_t *work_order = rx_serial();
-     	if(request_valid(work_order))
+     	if(request_valid(work_order) == true)
      	{
      		
      	}
