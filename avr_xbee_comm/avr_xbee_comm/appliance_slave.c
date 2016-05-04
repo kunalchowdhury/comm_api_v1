@@ -48,3 +48,12 @@ bool exec_appliance(bool on, uint8_t *port_status)
 	}
 	
 }
+
+int main(void)
+{
+     while(1)
+     {
+     	uint8_t work_order = rx_serial();
+     }
+	
+}
