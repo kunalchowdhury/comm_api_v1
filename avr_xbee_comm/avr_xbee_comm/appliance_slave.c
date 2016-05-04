@@ -10,6 +10,11 @@
 
 #define APPLIANCE_PORT_SIZE 3
 
+static inline bool request_valid(uint8_t *req)
+{
+     return false ;	
+}
+
 static inline bool exec(uint8_t *port_status, int flag)
 {
 	for (int c = 0 ; c < APPLIANCE_PORT_SIZE ; c++)
@@ -53,7 +58,11 @@ int main(void)
 {
      while(1)
      {
-     	uint8_t work_order = rx_serial();
+     	uint8_t *work_order = rx_serial();
+     	if(request_valid(work_order))
+     	{
+     		
+     	}
      }
 	
 }
