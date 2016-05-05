@@ -39,4 +39,12 @@ struct command_types
 	uint8_t send_slave_hb;
 } ;
 
+bool is_valid_zb_tx_req(uint8_t *req)
+{
+   uint8_t offset ;	
+	
+	
+}
+
+
 #endif /* UTIL_H_ */
