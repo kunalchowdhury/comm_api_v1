@@ -103,7 +103,7 @@ bool valid_at_resp(uint8_t * resp, uint8_t command_char_1, uint8_t command_char_
 }
 
 
-uint16_t *get_self_xbee_16_id()
+uint16_t get_self_xbee_16_id()
 {
 	init_at_cmd_request();
     uint8_t * buff = get_serial_buffer();
@@ -125,11 +125,14 @@ uint16_t *get_self_xbee_16_id()
 		if(valid_at_resp(resp, 'M', 'Y') == true)
 		{
 			// ?? how to retrieve??
+			//https://www.sparkfun.com/datasheets/Wireless/Zigbee/XBee-2.5-Manual.pdf
 			my_address_16_L = resp[8] ;
 			my_address_16_H = resp[9] ;
 			break;
 		}
 	}
+	uint16_t address = (my_address_16_H << 8)  | my_address_16_L ;
+	
 }
 
 bool is_valid_zb_req(uint8_t *req, uint16_t address_16)
