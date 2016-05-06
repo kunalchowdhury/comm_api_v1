@@ -132,9 +132,15 @@ uint16_t *get_self_xbee_16_id()
 
 bool is_valid_zb_req(uint8_t *req, uint16_t address_16)
 {
-	uint8_t offset = ZIGBEE_TRANSMIT_STATUS_REQUEST_SIZE -1;
+	/**If start_delimiter not found return false**/
+	if(req[0] != 0x7E)
+	{
+	   return false ;	
+	}
+	uint8_t limit = 3 + (req[2]- req[1]) ;
+	uint8_t offset = 3 ;
 	uint8_t checksum = 0;
-	while (offset)
+	while (offset <= limit)
 	{
 		switch(offset)
 		{
@@ -188,11 +194,9 @@ bool is_valid_zb_req(uint8_t *req, uint16_t address_16)
 			break;
 			
 		}
-		if(offset >= 3)
-		{
-			checksum += req[offset];
-		}
-		--offset;
+		
+		checksum += req[offset];
+		++offset;
 	}
 	return true;
 }
