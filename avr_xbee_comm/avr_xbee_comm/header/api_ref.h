@@ -24,11 +24,6 @@ void send_slave_msg(uint8_t c, uint8_t cmd_type);
 void request_slave_device_id();
 
 /************************************************************************/
-/* API used by slaves to send own device id to coordinator              */
-/************************************************************************/
-uint8_t * send_self_device_id();
-
-/************************************************************************/
 /* API to send heartbeat to the master coordinator
 at a periodic interval
 */

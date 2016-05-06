@@ -13,10 +13,49 @@
 #include "header/util.h"
 
 struct command_types _command_types = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09};
+struct zigbee_transmit_request _zb_tx_req;
+struct zigbee_transmit_request *_p_zb_tx_req = &_zb_tx_req;
+
 
 volatile uint8_t eeprom_start_byte;
 
 uint8_t eeprom_read_buffer[MAX_SLAVE_DEVICES+1];
+
+void init_zb_tx_request(struct zigbee_transmit_request *_p_zb_tx_req){
+	_p_zb_tx_req->start_delimiter = 0x70;
+	_p_zb_tx_req->msb = 0x00;
+	_p_zb_tx_req->lsb = 0x16;
+	_p_zb_tx_req->frame_type= 0x10;
+	_p_zb_tx_req->broadcast_radius = 0x00;
+}
+
+
+uint8_t * serial_payload(struct zigbee_transmit_request * ptr)
+{
+	ptr->tx_data.tx_data[0x00] = ptr->start_delimiter ;
+	ptr->tx_data.tx_data[0x01] = ptr->msb ;
+	ptr->tx_data.tx_data[0x02] = ptr->lsb ;
+	ptr->tx_data.tx_data[0x03] = ptr->frame_type ;
+	ptr->tx_data.tx_data[0x04] = ptr->frame_id ;
+	for (uint8_t c = 0x05 ; c < 0x0D ; c++)
+	{
+		ptr->tx_data.tx_data[c] = ptr->address_64.address[0x07-(c-0x05)];
+	}
+	for (uint8_t c = 0x0D ; c < 0x0F ; c++)
+	{
+		ptr->tx_data.tx_data[c] = ptr->address_16.address[0x01-(c-0x0D)];
+	}
+	ptr->tx_data.tx_data[0x0F] = 0x00;
+	ptr->tx_data.tx_data[0x10] = 0x00;
+	for (uint8_t c = 0x11 ; c < 0x19 ; c++)
+	{
+		ptr->tx_data.tx_data[c] = ptr->data.data[0x07-(c-0x11)];
+	}
+	ptr->tx_data.tx_data[0x19] = ptr->checksum;
+	
+	return ptr->tx_data.tx_data ;
+}
+
 
 /************************************************************************/
 /* Broadcast API											            */
@@ -24,7 +63,7 @@ uint8_t eeprom_read_buffer[MAX_SLAVE_DEVICES+1];
 
 void send_slave_msg(uint8_t c, uint8_t cmd_type)
 {
-	init_zb_tx_request();
+	init_zb_tx_request(_p_zb_tx_req);
 	_p_zb_tx_req->frame_id = 0x01;
 	_p_zb_tx_req->address_64.address[1] = 0xFF;
 	_p_zb_tx_req->address_64.address[0] = 0xFF;
@@ -72,7 +111,7 @@ bool read_slave_addresses()
 /************************************************************************/
 bool slave_ok(uint8_t *reply, uint8_t slave_low_address, uint8_t slave_high_address )
 {
-	uint8_t offset = UART_SENDER_BUFFER_SZ - ZIGBEE_TRANSMIT_STATUS_RESPONSE_SIZE -1;
+	uint8_t offset = ZIGBEE_TRANSMIT_STATUS_RESPONSE_SIZE -1;
 	uint8_t checksum = 0;
 	while(offset)
 	{
@@ -132,7 +171,7 @@ bool slave_ok(uint8_t *reply, uint8_t slave_low_address, uint8_t slave_high_addr
 		{
 			checksum += reply[offset];
 		}
-		
+		--offset;
 	}
 	return true;
 }

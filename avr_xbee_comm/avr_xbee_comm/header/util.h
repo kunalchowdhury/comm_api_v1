@@ -22,7 +22,7 @@
 #define MAX_SLAVE_DEVICES 0x0A 
 #define NUM_RETRIES_FIRST_HEARTBEAT 0x1000  
 #define ZIGBEE_TRANSMIT_STATUS_RESPONSE_SIZE 0x0A
-
+#define ZIGBEE_TRANSMIT_STATUS_REQUEST_SIZE  0xF9
 
 typedef enum { false, true } bool;
 
@@ -38,13 +38,6 @@ struct command_types
 	uint8_t heartbeat;
 	uint8_t send_slave_hb;
 } ;
-
-bool is_valid_zb_tx_req(uint8_t *req)
-{
-   uint8_t offset ;	
-	
-	
-}
 
 
 #endif /* UTIL_H_ */
