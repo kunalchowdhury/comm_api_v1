@@ -14,6 +14,11 @@
 
 volatile uint8_t buffer[UART_SENDER_BUFFER_SZ];
 
+uint8_t * get_serial_buffer()
+{
+	return buffer;
+}
+
 // baud rate = 9600, 8 bit data, 1 stop bit
 void uart_init(bool send){
 	if(send == true)

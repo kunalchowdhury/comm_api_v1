@@ -27,13 +27,7 @@ struct xbee_at_command_request{
 	
 };
 
-void init_at_cmd_request(struct xbee_at_command_request *_p_xb_cmd_req){
-	_p_xb_cmd_req->base.frame_id = 0x7E;
-	_p_xb_cmd_req->base.msb = 0x00;
-	_p_xb_cmd_req->base.lsb = 0x04;
-	_p_xb_cmd_req->base.frame_type = 0x08;
-}
-
+void init_at_cmd_request(struct xbee_at_command_request *_p_xb_cmd_req);
 
 struct xbee_at_command_response{
 	struct xbee_at_command_base base;

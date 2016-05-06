@@ -111,18 +111,21 @@ bool read_slave_addresses()
 /************************************************************************/
 bool slave_ok(uint8_t *reply, uint8_t slave_low_address, uint8_t slave_high_address )
 {
-	uint8_t offset = ZIGBEE_TRANSMIT_STATUS_RESPONSE_SIZE -1;
+	/************************************************************************/
+	/* Not a valid ZB delimiter                                             */
+	/************************************************************************/
+	if(reply[0] != 0x7E)
+	{
+		return false;
+	}
+	
+	uint8_t limit = 3 + (reply[2] - reply[1]) ; 
+	uint8_t offset = 3;
 	uint8_t checksum = 0;
-	while(offset)
+	while(offset <= limit)
 	{
 		switch(offset)
 		{
-			case 0:
-			if(reply[offset] != 0x7E)
-			{
-				return false;
-			}
-			break;
 			case 3:
 			if(reply[offset] != 0x8B)
 			{
@@ -167,11 +170,8 @@ bool slave_ok(uint8_t *reply, uint8_t slave_low_address, uint8_t slave_high_addr
 			break;
 		}
 		
-		if(offset >= 3)
-		{
-			checksum += reply[offset];
-		}
-		--offset;
+		checksum += reply[offset];
+		++offset;
 	}
 	return true;
 }
@@ -204,6 +204,7 @@ void master_exec()
 			/*  SLAVE HEARTBEATING FINE, SEND ACK TO SLAVE                          */
 			/************************************************************************/
 					send_slave_msg(c, _command_types.ack);
+					break;
 				}
 				
 			}
