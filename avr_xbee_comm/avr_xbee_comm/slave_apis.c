@@ -144,24 +144,6 @@ bool is_valid_zb_req(uint8_t *req, uint16_t address_16)
 	{
 		switch(offset)
 		{
-			case 0:
-			if(req[offset] != 0x7E)
-			{
-				return false;
-			}
-			break;
-			case 1:
-			if(req[offset] != 0x00)
-			{
-				return false;
-			}
-			break;
-			case 2:
-			if(req[offset] != 0x16)
-			{
-				return false;
-			}
-			break;
 			case 3:
 			if (req[offset] != 0x10)
 			{
