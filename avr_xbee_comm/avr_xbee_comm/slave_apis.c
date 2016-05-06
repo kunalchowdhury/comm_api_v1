@@ -25,14 +25,14 @@ static inline uint8_t checksum()
 	return 0xFF - (_checksum & 0xFF);
 }
 
-static inline void init_at_cmd_request(){
+static inline void init_at_cmd_request(uint8_t command_char1, uint8_t command_char2){
 	_p_at_command_req->base.start_delimiter = 0x7E;
 	_p_at_command_req->base.msb = 0x00;
 	_p_at_command_req->base.lsb = 0x04;
 	_p_at_command_req->base.frame_type = 0x08;
 	_p_at_command_req->base.frame_id= 0x01;
-	_p_at_command_req->base.at_command_char1='M';
-	_p_at_command_req->base.at_command_char2='Y';
+	_p_at_command_req->base.at_command_char1= command_char1;
+	_p_at_command_req->base.at_command_char2= command_char2;
 	_p_at_command_req->checksum = checksum();
 }
 
@@ -102,11 +102,23 @@ bool valid_at_resp(uint8_t * resp, uint8_t command_char_1, uint8_t command_char_
 	return true;
 }
 
-
+void reset()
+{
+    init_at_cmd_request('R', 'E');
+    /************************************************************************/
+    /* Reset the buffer before transmitting                                 */
+    /************************************************************************/
+     for(uint8_t i= 0 ; i < UART_SENDER_BUFFER_SZ ; i++)
+     {
+	buff[i] =0;
+     }
+     init_for_transmit(buff);
+     tx_serial(buff);
+}
 uint16_t get_self_xbee_16_id()
 {
-	init_at_cmd_request();
-    uint8_t * buff = get_serial_buffer();
+	init_at_cmd_request('M', 'Y');
+        uint8_t * buff = get_serial_buffer();
 	/************************************************************************/
 	/* Reset the buffer before transmitting                                 */
 	/************************************************************************/
@@ -114,6 +126,7 @@ uint16_t get_self_xbee_16_id()
 	{
 		buff[i] =0;
 	}
+	init_for_transmit(buff);
 	tx_serial(buff);
 	uint8_t retry = 0;
 	while(++retry < NUM_RETRIES_FIRST_HEARTBEAT)
