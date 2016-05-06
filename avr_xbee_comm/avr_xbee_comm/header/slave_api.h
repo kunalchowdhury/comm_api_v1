@@ -10,7 +10,10 @@
 #define SLAVE_API_H_
 #include "util.h"
 
-
+/*********************************************************/
+/* API to reset the current XBee Module */
+/*********************************************************/
+void reset();
 
 /*********************************************************/
 /* API for the Slave to validate the incoming ZB request */
