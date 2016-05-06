@@ -125,6 +125,8 @@ uint16_t *get_self_xbee_16_id()
 		if(valid_at_resp(resp, 'M', 'Y') == true)
 		{
 			// ?? how to retrieve??
+			my_address_16_L = resp[8] ;
+			my_address_16_H = resp[9] ;
 			break;
 		}
 	}
