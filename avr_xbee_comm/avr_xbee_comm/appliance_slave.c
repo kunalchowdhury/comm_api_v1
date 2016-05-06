@@ -16,20 +16,20 @@ static inline bool exec(uint8_t *port_status, int flag)
 	{
 		switch(c)
 		{
-			case 0:
-				DDRB = flag;
-				PORTB = port_status[c];
-			    return true;
-			case 1:
-				DDRC = flag;
-				PORTC = port_status[c];
-			    return true;
-			case 2:
-			    DDRD = flag ;
-			    PORTD = port_status[c];
-			    return true;
-			default:
-			    return false;
+		  case 0:
+			DDRB = flag;
+			PORTB = port_status[c];
+			return true;
+		  case 1:
+			DDRC = flag;
+			PORTC = port_status[c];
+		        return true;
+		  case 2:
+			DDRD = flag ;
+			PORTD = port_status[c];
+			return true;
+		   default:
+		        return false;
 		}
 	}
 	return false;
@@ -44,7 +44,6 @@ bool exec_appliance(bool on, uint8_t *port_status)
 	else
 	{
 		return exec(port_status, 0);
-		
 	}
 	
 }
