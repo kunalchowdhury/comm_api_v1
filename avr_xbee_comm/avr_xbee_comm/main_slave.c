@@ -16,8 +16,13 @@ int main1(void)
    {
 	 uint8_t *work_request = rx_serial();
 	 if(address_16)
-         address_16 = get_self_xbee_16_id(); 	 
-	 if(is_valid_zb_req(work_request, address) )
+	 {
+            address_16 = get_self_xbee_16_id(); 	 
+	 }
+	 if(is_valid_zb_req(work_request, address) == true)
+	 {
+	        		
+	 }
    }
 	
 }
