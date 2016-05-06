@@ -14,6 +14,19 @@ struct xbee_at_command_request *_p_at_command_req = &_at_command_req;
 volatile uint8_t my_address_16_L;
 volatile uint8_t my_address_16_H;
 
+static inline uint8_t * empty_serial_buffer()
+{
+    uint8_t * buff = get_serial_buffer();
+    /************************************************************************/
+    /* Reset the buffer before transmitting                                 */
+    /************************************************************************/
+     for(uint8_t i= 0 ; i < UART_SENDER_BUFFER_SZ ; i++)
+     {
+	buff[i] =0;
+     }	
+     return buff;
+}
+
 static inline uint8_t checksum()
 {
 	uint8_t _checksum = _p_at_command_req->base.start_delimiter + 
@@ -104,28 +117,15 @@ bool valid_at_resp(uint8_t * resp, uint8_t command_char_1, uint8_t command_char_
 
 void reset()
 {
-    init_at_cmd_request('R', 'E');
-    /************************************************************************/
-    /* Reset the buffer before transmitting                                 */
-    /************************************************************************/
-     for(uint8_t i= 0 ; i < UART_SENDER_BUFFER_SZ ; i++)
-     {
-	buff[i] =0;
-     }
+     init_at_cmd_request('R', 'E');
+     uint8_t *buff = empty_serial_buffer();
      init_for_transmit(buff);
      tx_serial(buff);
 }
 uint16_t get_self_xbee_16_id()
 {
 	init_at_cmd_request('M', 'Y');
-        uint8_t * buff = get_serial_buffer();
-	/************************************************************************/
-	/* Reset the buffer before transmitting                                 */
-	/************************************************************************/
-	for(uint8_t i= 0 ; i < UART_SENDER_BUFFER_SZ ; i++)
-	{
-		buff[i] =0;
-	}
+        uint8_t *buff = empty_serial_buffer();
 	init_for_transmit(buff);
 	tx_serial(buff);
 	uint8_t retry = 0;
