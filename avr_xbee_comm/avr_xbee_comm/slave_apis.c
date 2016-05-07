@@ -1,14 +1,14 @@
 /*
- * slave_apis.c
- *
- * Created: 5/5/2016 11:17:15 AM
- *  Author: Ireena
- */ 
+* slave_apis.c
+*
+* Created: 5/5/2016 11:17:15 AM
+*  Author: Ireena
+*/
 #include <avr/io.h>
 #include "header/slave_api.h"
 #include "header/serial_sender_receiver.h"
 #include "header/util.h"
-
+#include "header/xbee_message.h"
 struct xbee_at_command_request _at_command_req ;
 struct xbee_at_command_request *_p_at_command_req = &_at_command_req;
 volatile uint8_t my_address_16_L;
@@ -16,29 +16,24 @@ volatile uint8_t my_address_16_H;
 
 static inline uint8_t * empty_serial_buffer()
 {
-    uint8_t * buff = get_serial_buffer();
-    /************************************************************************/
-    /* Reset the buffer before transmitting                                 */
-    /************************************************************************/
-     for(uint8_t i= 0 ; i < UART_SENDER_BUFFER_SZ ; i++)
-     {
-	buff[i] =0;
-     }	
-     return buff;
+	uint8_t * buff = get_serial_buffer();
+	/************************************************************************/
+	/* Reset the buffer before transmitting                                 */
+	/************************************************************************/
+	for(uint8_t i= 0 ; i < UART_SENDER_BUFFER_SZ ; i++)
+	{
+		buff[i] =0;
+	}
+	return buff;
 }
 
 static inline uint8_t checksum()
 {
-	uint8_t _checksum = _p_at_command_req->base.start_delimiter + 
-	                    _p_at_command_req->base.msb+_p_at_command_req->base.lsb
-	                    + _p_at_command_req->base.frame_type 
-						+ _p_at_command_req->base.frame_id
-						+_p_at_command_req->base.at_command_char1
-						+_p_at_command_req->base.at_command_char2 ;
+	uint8_t _checksum = _p_at_command_req->base.start_delimiter;
 	return 0xFF - (_checksum & 0xFF);
 }
 
-static inline void init_at_cmd_request(uint8_t command_char1, uint8_t command_char2){
+void init_at_cmd_request(struct xbee_at_command_request *_p_xb_cmd_req, uint8_t command_char1, uint8_t command_char2){
 	_p_at_command_req->base.start_delimiter = 0x7E;
 	_p_at_command_req->base.msb = 0x00;
 	_p_at_command_req->base.lsb = 0x04;
@@ -99,7 +94,7 @@ bool valid_at_resp(uint8_t * resp, uint8_t command_char_1, uint8_t command_char_
 				return false;
 			}
 			break;
-		    case 7:
+			case 7:
 			if(resp[offset] != 0x00)
 			{
 				return false;
@@ -109,23 +104,23 @@ bool valid_at_resp(uint8_t * resp, uint8_t command_char_1, uint8_t command_char_
 		}
 		
 		
-	   checksum += resp[offset];	
-	   ++offset;
+		checksum += resp[offset];
+		++offset;
 	}
 	return true;
 }
 
 void reset()
 {
-     init_at_cmd_request('R', 'E');
-     uint8_t *buff = empty_serial_buffer();
-     init_for_transmit(buff);
-     tx_serial(buff);
+	init_at_cmd_request(_p_at_command_req, 'R', 'E');
+	uint8_t *buff = empty_serial_buffer();
+	init_for_transmit(buff);
+	tx_serial(buff);
 }
 uint16_t get_self_xbee_16_id()
 {
-	init_at_cmd_request('M', 'Y');
-        uint8_t *buff = empty_serial_buffer();
+	init_at_cmd_request(_p_at_command_req, 'M', 'Y');
+	uint8_t *buff = empty_serial_buffer();
 	init_for_transmit(buff);
 	tx_serial(buff);
 	uint8_t retry = 0;
@@ -137,15 +132,13 @@ uint16_t get_self_xbee_16_id()
 		/************************************************************************/
 		if(valid_at_resp(resp, 'M', 'Y') == true)
 		{
-			// ?? how to retrieve??
-			//https://www.sparkfun.com/datasheets/Wireless/Zigbee/XBee-2.5-Manual.pdf
 			my_address_16_L = resp[8] ;
 			my_address_16_H = resp[9] ;
 			break;
 		}
 	}
 	uint16_t address = (my_address_16_H << 8)  | my_address_16_L ;
-	
+	return address;
 }
 
 bool is_valid_zb_req(uint8_t *req, uint16_t address_16)
@@ -153,7 +146,7 @@ bool is_valid_zb_req(uint8_t *req, uint16_t address_16)
 	/**If start_delimiter not found return false**/
 	if(req[0] != 0x7E)
 	{
-	   return false ;	
+		return false ;
 	}
 	uint8_t limit = 3 + (req[2]- req[1]) ;
 	uint8_t offset = 3 ;

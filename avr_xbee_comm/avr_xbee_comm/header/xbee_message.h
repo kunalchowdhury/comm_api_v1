@@ -19,7 +19,7 @@ struct xbee_at_command_base{
 	uint8_t frame_id;
 	uint8_t at_command_char1 ;
 	uint8_t at_command_char2;
-} base;
+} ;
 
 struct xbee_at_command_request{
 	struct xbee_at_command_base base;
@@ -27,7 +27,7 @@ struct xbee_at_command_request{
 	
 };
 
-void init_at_cmd_request(struct xbee_at_command_request *_p_xb_cmd_req);
+void init_at_cmd_request(struct xbee_at_command_request *_p_xb_cmd_req, uint8_t command_char1, uint8_t command_char2);
 
 struct xbee_at_command_response{
 	struct xbee_at_command_base base;

@@ -24,7 +24,7 @@ bool is_valid_zb_req(uint8_t *req, uint16_t address_16) ;
 /************************************************************************/
 /* API to get the 16 bit address of the current XBEE slave              */
 /************************************************************************/
-uint16_t *get_self_xbee_16_id();
+uint16_t get_self_xbee_16_id();
 
 
 #endif /* SLAVE_API_H_ */

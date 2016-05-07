@@ -8,7 +8,7 @@
 #include "header/serial_sender_receiver.h"
 #include "header/util.h"
 #include "header/api_ref.h"
-
+#include "header/slave_api.h"
 volatile uint16_t address_16 =0;
 
 int main1(void)
@@ -21,7 +21,7 @@ int main1(void)
             address_16 = get_self_xbee_16_id(); 	 
 	 }
 	 uint8_t port_status[3] = {0x03, 0x02, 0}; 
-	 if(is_valid_zb_req(work_request, address) == true)
+	 if(is_valid_zb_req(work_request, address_16) == true)
 	 {
 	         exec_appliance(true, port_status);  		
 	 }

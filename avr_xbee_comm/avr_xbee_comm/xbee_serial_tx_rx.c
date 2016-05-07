@@ -12,7 +12,7 @@
 #define USART_BAUDRATE 9600
 #define UBRR_VALUE (((F_CPU / (USART_BAUDRATE * 16UL))) - 1)
 
-volatile uint8_t buffer[UART_SENDER_BUFFER_SZ];
+uint8_t buffer[UART_SENDER_BUFFER_SZ];
 
 uint8_t * get_serial_buffer()
 {
